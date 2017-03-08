@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace IssetBV\PushNotification\Type\Apple;
 
-use IssetBV\PushNotification\Type\Apple\Message\AppleMessage;
 use IssetBV\PushNotification\Core\Connection\Connection;
 use IssetBV\PushNotification\Core\Connection\ConnectionException;
 use IssetBV\PushNotification\Core\Connection\ConnectionExceptionImpl;
@@ -13,6 +12,7 @@ use IssetBV\PushNotification\Core\Connection\ConnectionResponseImpl;
 use IssetBV\PushNotification\Core\Message\Message;
 use IssetBV\PushNotification\Core\Response;
 use IssetBV\PushNotification\LoggerTrait;
+use IssetBV\PushNotification\Type\Apple\Message\AppleMessage;
 
 /**
  * Class AppleConnection.

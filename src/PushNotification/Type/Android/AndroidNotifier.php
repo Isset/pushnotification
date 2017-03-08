@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace IssetBV\PushNotification\Type\Android;
 
-use IssetBV\PushNotification\Type\Android\Message\AndroidMessage;
-use IssetBV\PushNotification\Type\Android\Message\AndroidMessageEnvelope;
 use IssetBV\PushNotification\Core\Connection\ConnectionException;
 use IssetBV\PushNotification\Core\Connection\ConnectionHandlerException;
 use IssetBV\PushNotification\Core\Message\Message;
 use IssetBV\PushNotification\Core\Message\MessageEnvelope;
 use IssetBV\PushNotification\Core\Message\MessageEnvelopeQueue;
 use IssetBV\PushNotification\Core\NotifierAbstract;
+use IssetBV\PushNotification\Type\Android\Message\AndroidMessage;
+use IssetBV\PushNotification\Type\Android\Message\AndroidMessageEnvelope;
 
 /**
  * Class AndroidNotifier.

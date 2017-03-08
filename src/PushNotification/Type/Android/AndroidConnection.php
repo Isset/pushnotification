@@ -7,7 +7,6 @@ namespace IssetBV\PushNotification\Type\Android;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;
-use IssetBV\PushNotification\Type\Android\Message\AndroidMessage;
 use IssetBV\PushNotification\Core\Connection\Connection;
 use IssetBV\PushNotification\Core\Connection\ConnectionException;
 use IssetBV\PushNotification\Core\Connection\ConnectionHandlerException;
@@ -15,6 +14,7 @@ use IssetBV\PushNotification\Core\Connection\ConnectionResponseImpl;
 use IssetBV\PushNotification\Core\Message\Message;
 use IssetBV\PushNotification\Core\Response;
 use IssetBV\PushNotification\LoggerTrait;
+use IssetBV\PushNotification\Type\Android\Message\AndroidMessage;
 
 /**
  * Class AndroidConnection.

@@ -8,6 +8,7 @@ use IssetBV\PushNotification\Core\Exception\NotifyFailedException;
 use IssetBV\PushNotification\Core\Message\Message;
 use IssetBV\PushNotification\Core\Message\MessageEnvelope;
 use IssetBV\PushNotification\Core\Notifier;
+use IssetBV\PushNotification\Exception\NotifierNotFoundException;
 use LogicException;
 
 /**

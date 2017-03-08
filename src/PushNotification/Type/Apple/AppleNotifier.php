@@ -5,9 +5,6 @@ declare(strict_types=1);
 namespace IssetBV\PushNotification\Type\Apple;
 
 use Exception;
-use IssetBV\PushNotification\Type\Apple\Exception\AppleNotifyFailedException;
-use IssetBV\PushNotification\Type\Apple\Message\AppleMessage;
-use IssetBV\PushNotification\Type\Apple\Message\AppleMessageEnvelope;
 use IssetBV\PushNotification\Core\Connection\ConnectionException;
 use IssetBV\PushNotification\Core\Connection\ConnectionHandlerException;
 use IssetBV\PushNotification\Core\Message\Message;
@@ -15,6 +12,9 @@ use IssetBV\PushNotification\Core\Message\MessageEnvelope;
 use IssetBV\PushNotification\Core\Message\MessageEnvelopeQueue;
 use IssetBV\PushNotification\Core\NotifierAbstract;
 use IssetBV\PushNotification\Core\Response;
+use IssetBV\PushNotification\Type\Apple\Exception\AppleNotifyFailedException;
+use IssetBV\PushNotification\Type\Apple\Message\AppleMessage;
+use IssetBV\PushNotification\Type\Apple\Message\AppleMessageEnvelope;
 
 /**
  * Class AppleNotifier.
