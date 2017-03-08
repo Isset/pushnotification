@@ -1,0 +1,21 @@
+{
+    "name": "IssetBV/PushNotification",
+    "description": "",
+    "homepage": "http://www.isset.nl",
+    "authors": [
+        {
+            "name": "Felix Balfoort",
+            "email": "felix@isset.nl"
+        }
+    ],
+    "require": {
+        "php": ">=7.0",
+        "guzzlehttp/guzzle": "^6.2",
+        "phpoption/phpoption": "^1.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "IssetBV\\PushNotification\\": "src/PushNotification"
+        }
+    }
+}
