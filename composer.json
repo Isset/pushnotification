@@ -2,6 +2,7 @@
     "name": "issetbv/push-notification",
     "description": "",
     "homepage": "http://www.isset.nl",
+    "license": "MIT",
     "authors": [
         {
             "name": "Felix Balfoort",
