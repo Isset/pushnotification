@@ -41,7 +41,7 @@ class WindowsConnection implements Connection
      * @param string $type
      * @param bool $default
      */
-    public function __construct(string $type, bool $default)
+    public function __construct(string $type, bool $default = false)
     {
         $this->type = $type;
         $this->default = $default;
