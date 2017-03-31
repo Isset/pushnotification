@@ -12,11 +12,22 @@
     "require": {
         "php": ">=7.0",
         "guzzlehttp/guzzle": "^6.2",
-        "phpoption/phpoption": "^1.5"
+        "phpoption/phpoption": "^1.5",
+        "psr/log": "^1.0"
     },
     "autoload": {
         "psr-4": {
             "IssetBV\\PushNotification\\": "src/PushNotification"
         }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "IssetBV\\PushNotification\\Tests\\": "tests/PushNotification"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.0",
+        "friendsofphp/php-cs-fixer": "^2.1",
+        "phpstan/phpstan": "^0.6.4"
     }
 }

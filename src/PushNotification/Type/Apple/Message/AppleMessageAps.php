@@ -21,7 +21,7 @@ class AppleMessageAps extends AppleMessage
     /**
      * @return AppleMessageApsData
      */
-    public function getAps()
+    public function getAps(): AppleMessageApsData
     {
         if ($this->appleMessageAps === null) {
             $this->appleMessageAps = new AppleMessageApsData();

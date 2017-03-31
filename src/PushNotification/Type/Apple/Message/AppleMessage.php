@@ -7,9 +7,6 @@ namespace IssetBV\PushNotification\Type\Apple\Message;
 use DateTime;
 use IssetBV\PushNotification\Core\Message\Message;
 
-/**
- * Class AppleMessage.
- */
 abstract class AppleMessage implements Message
 {
     /**
@@ -18,17 +15,14 @@ abstract class AppleMessage implements Message
      * @var int
      */
     private static $identifierCounter = 1;
-    /**
-     * @var string
-     */
+
+    /** @var string */
     private $deviceToken;
-    /**
-     * @var int
-     */
+
+    /** @var int */
     private $expiresAt = 0;
-    /**
-     * @var int
-     */
+
+    /** @var int */
     private $identifier;
 
     /**
@@ -71,7 +65,7 @@ abstract class AppleMessage implements Message
      */
     public function setExpiresAt(DateTime $expiresAt)
     {
-        $this->expiresAt = $expiresAt->format('U');
+        $this->expiresAt = (int) $expiresAt->format('U');
     }
 
     abstract public function getMessage(): array;

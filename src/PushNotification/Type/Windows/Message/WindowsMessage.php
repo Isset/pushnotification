@@ -32,9 +32,9 @@ class WindowsMessage implements Message
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         return $this->identifier;
     }
@@ -59,7 +59,7 @@ class WindowsMessage implements Message
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getMessage()
     {

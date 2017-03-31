@@ -46,17 +46,12 @@ class MessageEnvelopeQueueImpl implements MessageEnvelopeQueue
     {
         $return = new self();
         $items = $this->queue;
-        $this->reset();
-        $found = false;
-        foreach ($items as $id => $item) {
-            if (!$found) {
-                $return->add($item);
-                if ($item->getMessage()->getIdentifier() === $identifier) {
-                    $found = true;
-                }
-            } else {
-                $this->add($item);
-                $newQueue[] = $item;
+        $this->clear();
+        $currentQueue = $return;
+        foreach ($items as $item) {
+            $currentQueue->add($item);
+            if ($item->getMessage()->getIdentifier() === $identifier) {
+                $currentQueue = $this;
             }
         }
 
@@ -71,7 +66,10 @@ class MessageEnvelopeQueueImpl implements MessageEnvelopeQueue
         return count($this->queue) === 0;
     }
 
-    public function reset()
+    /**
+     * Empties the queue.
+     */
+    public function clear()
     {
         $this->queue = [];
     }

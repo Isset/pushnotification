@@ -6,6 +6,7 @@ namespace IssetBV\PushNotification\Type\Windows;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Request;
 use IssetBV\PushNotification\Core\Connection\Connection;
 use IssetBV\PushNotification\Core\Connection\ConnectionException;
@@ -40,20 +41,27 @@ class WindowsConnection implements Connection
      *
      * @param string $type
      * @param bool $default
+     * @param null|HandlerStack $handler
      */
-    public function __construct(string $type, bool $default = false)
+    public function __construct(string $type, bool $default = false, HandlerStack $handler = null)
     {
-        $this->type = $type;
-        $this->default = $default;
-        $this->client = new Client([
+        $clientConfig = [
             'headers' => [
-                'Content-Type: text/xml',
-                'X-WindowsPhone-Target: toast',
-                'X-NotificationClass: 2',
+                'Content-Type' => 'text/xml',
+                'X-WindowsPhone-Target' => 'toast',
+                'X-NotificationClass' => '2',
             ],
             'connect_timeout' => 3,
             'timeout' => 5,
-        ]);
+        ];
+
+        if ($handler instanceof HandlerStack) {
+            $clientConfig['handler'] = $handler;
+        }
+
+        $this->client = new Client($clientConfig);
+        $this->type = $type;
+        $this->default = $default;
     }
 
     /**
@@ -76,6 +84,8 @@ class WindowsConnection implements Connection
         $request = new Request('POST', $message->getIdentifier(), [], $xml->asXML());
         try {
             $clientResponse = $this->client->send($request);
+            // check against headers? X-NotificationStatus / X-SubscriptionStatus / X-DeviceConnectionStatus
+            // @see https://msdn.microsoft.com/en-us/library/windows/apps/ff941100(v=vs.105).aspx
             $response->setResponse($clientResponse->getBody()->getContents());
         } catch (RequestException $e) {
             $response->setErrorResponse($e->getMessage());

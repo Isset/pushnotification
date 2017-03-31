@@ -77,7 +77,7 @@ class WindowsNotifier extends NotifierAbstract
             /* @var WindowsMessageEnvelope $messageEnvelope */
             $this->sendMessageEnvelope($connection, $messageEnvelope);
         }
-        $queue->reset();
+        $queue->clear();
     }
 
     /**
