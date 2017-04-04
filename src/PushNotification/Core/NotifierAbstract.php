@@ -73,7 +73,7 @@ abstract class NotifierAbstract implements Notifier
     public function send(Message $message, string $connectionName = null): MessageEnvelope
     {
         if (!$this->handles($message)) {
-            throw new LogicException('Message couldn\'t be handled by this notifier');
+            throw new LogicException('Message of type ' . get_class($message) . " couldn't be handled by this notifier");
         }
 
         return $this->sendMessage($message, $connectionName);
@@ -91,7 +91,7 @@ abstract class NotifierAbstract implements Notifier
     public function queue(Message $message, string $connectionName = null): MessageEnvelope
     {
         if (!$this->handles($message)) {
-            throw new LogicException('Message couldn\'t be handled by this notifier');
+            throw new LogicException('Message of type ' . get_class($message) . " couldn't be handled by this notifier");
         }
 
         return $this->addToQueue($message, $connectionName);

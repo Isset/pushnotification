@@ -88,7 +88,7 @@ class AppleNotifier extends NotifierAbstract
             $queue->traverseWith(function (MessageEnvelope $messageEnvelope) {
                 $messageEnvelope->setState(MessageEnvelope::SUCCESS);
             });
-            $queue->reset();
+            $queue->clear();
         } else {
             $this->handleErrorResponse($connectionName, $queue, $response);
         }
@@ -117,16 +117,16 @@ class AppleNotifier extends NotifierAbstract
     private function handleErrorResponse(string $connectionName, MessageEnvelopeQueue $queue, Response $response)
     {
         $error = $response->getResponse();
-        if (!array_key_exists('identifier', $error)) {
+        if (false === is_array($error) or !array_key_exists('identifier', $error)) {
             $queue->traverseWith(function (MessageEnvelope $messageEnvelope) {
                 $messageEnvelope->setState(MessageEnvelope::FAILED);
             });
-            $queue->reset();
+            $queue->clear();
             throw new AppleNotifyFailedException('Message gave an error but no response all messages marked as failed');
         }
         // Get all the items that are sent before or are the failed identifier
         $preIdentifierQueue = $queue->split($error['identifier']);
-        //remove the failed identifier from the queue so we can fail it
+        // remove the failed identifier from the queue so we can fail it
         $failedMessage = $preIdentifierQueue->remove($error['identifier'])->getOrThrow(new AppleNotifyFailedException('Failed identifier not found: ' . $error['identifier']));
         $failedMessage->setState(MessageEnvelope::FAILED);
         $failedMessage->setResponse($response);
@@ -134,7 +134,7 @@ class AppleNotifier extends NotifierAbstract
         $preIdentifierQueue->traverseWith(function (MessageEnvelope $messageEnvelope) {
             $messageEnvelope->setState(MessageEnvelope::SUCCESS);
         });
-        //reflush the remainder of the queue these messages have to be send again
+        // reflush the remainder of the queue these messages have to be send again
         $this->flushQueueItem($connectionName, $queue);
     }
 

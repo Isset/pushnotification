@@ -39,7 +39,7 @@ class ConnectionHandlerImpl implements ConnectionHandler
             return $this->getDefaultConnection();
         }
         if (!$this->hasConnectionType($type)) {
-            throw new ConnectionHandlerExceptionImpl('connection not found for type: ' . $type);
+            throw new ConnectionHandlerExceptionImpl('Connection not found for type: ' . $type);
         }
 
         return $this->connections[$type];

@@ -53,5 +53,5 @@ interface MessageEnvelopeQueue
      */
     public function isEmpty(): bool;
 
-    public function reset();
+    public function clear();
 }

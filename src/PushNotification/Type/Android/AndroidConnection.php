@@ -6,6 +6,7 @@ namespace IssetBV\PushNotification\Type\Android;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Request;
 use IssetBV\PushNotification\Core\Connection\Connection;
 use IssetBV\PushNotification\Core\Connection\ConnectionException;
@@ -49,17 +50,24 @@ class AndroidConnection implements Connection
      * @param int $timeout
      * @param bool $dryRun
      * @param bool $default
+     * @param null|HandlerStack $handler
      */
-    public function __construct(string $type, string $apiUrl, string $apiKey, int $timeout, bool $dryRun = false, bool $default = false)
+    public function __construct(string $type, string $apiUrl, string $apiKey, int $timeout, bool $dryRun = false, bool $default = false, HandlerStack $handler = null)
     {
-        $this->client = new Client([
+        $clientConfig = [
             'base_uri' => rtrim($apiUrl, '/'),
             'headers' => [
                 'Content-Type' => 'application/json',
                 'Authorization' => 'key=' . $apiKey,
             ],
             'timeout' => $timeout,
-        ]);
+        ];
+
+        if ($handler instanceof HandlerStack) {
+            $clientConfig['handler'] = $handler;
+        }
+
+        $this->client = new Client($clientConfig);
         $this->type = $type;
         $this->default = $default;
         $this->dryRun = $dryRun;
@@ -83,6 +91,7 @@ class AndroidConnection implements Connection
             $request = new Request('POST', '', [], $requestData);
             $clientResponse = $this->client->send($request);
             $data = json_decode($clientResponse->getBody()->getContents(), true);
+
             $response->setResponse($data);
             $response->setSuccess($data['success'] > 0);
         } catch (RequestException $e) {

@@ -78,9 +78,13 @@ class AndroidNotifier extends NotifierAbstract
             /* @var AndroidMessageEnvelope $messageEnvelope */
             $this->sendMessageEnvelope($connection, $messageEnvelope);
         }
-        $queue->reset();
+        $queue->clear();
     }
 
+    /**
+     * @param AndroidConnection $connection
+     * @param AndroidMessageEnvelope $messageEnvelope
+     */
     private function sendMessageEnvelope(AndroidConnection $connection, AndroidMessageEnvelope $messageEnvelope)
     {
         $response = $connection->sendAndReceive($messageEnvelope->getMessage());
