@@ -52,7 +52,7 @@ class AndroidConnection implements Connection
      * @param bool $default
      * @param null|HandlerStack $handler
      */
-    public function __construct(string $type, string $apiUrl, string $apiKey, int $timeout, bool $dryRun = false, bool $default = false, HandlerStack $handler = null)
+    public function __construct(string $type, string $apiUrl, string $apiKey, int $timeout = 30, bool $dryRun = false, bool $default = false, HandlerStack $handler = null)
     {
         $clientConfig = [
             'base_uri' => rtrim($apiUrl, '/'),

@@ -7,7 +7,7 @@ namespace IssetBV\PushNotification\Type\Windows\Message;
 use IssetBV\PushNotification\Core\Message\Message;
 
 /**
- * Class WindowsMessage.
+ * @see https://msdn.microsoft.com/en-us/library/windows/apps/hh202967(v=vs.105).aspx
  */
 class WindowsMessage implements Message
 {
