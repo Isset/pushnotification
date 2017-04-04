@@ -14,9 +14,6 @@ use IssetBV\PushNotification\Core\Response;
 use IssetBV\PushNotification\LoggerTrait;
 use IssetBV\PushNotification\Type\Apple\Message\AppleMessage;
 
-/**
- * Class AppleConnection.
- */
 class AppleConnection implements Connection
 {
     use LoggerTrait;
@@ -52,13 +49,13 @@ class AppleConnection implements Connection
     /**
      * Connection constructor.
      *
-     * @param string $url
      * @param string $type
+     * @param string $url
      * @param string $pemKeyFile
      * @param string $pemPasswordPhrase
      * @param bool $default
      */
-    public function __construct(string $url, string $type, string $pemKeyFile, string $pemPasswordPhrase = null, bool $default = false)
+    public function __construct(string $type, string $url, string $pemKeyFile, string $pemPasswordPhrase = null, bool $default = false)
     {
         $this->type = $type;
         $this->default = $default;

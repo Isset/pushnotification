@@ -7,7 +7,7 @@ namespace IssetBV\PushNotification\Type\Android\Message;
 use IssetBV\PushNotification\Core\Message\Message;
 
 /**
- * Class AndroidMessage.
+ * @see https://firebase.google.com/docs/cloud-messaging/send-message.
  */
 class AndroidMessage implements Message
 {

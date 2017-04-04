@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace IssetBV\PushNotification\Type\Apple\Message;
 
 /**
- * Class AppleMessageAps.
+ * @see https://developer.apple.com/library/content/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/CreatingtheNotificationPayload.html
  */
 class AppleMessageAps extends AppleMessage
 {
