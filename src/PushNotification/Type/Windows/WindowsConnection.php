@@ -88,7 +88,7 @@ class WindowsConnection implements Connection
             // @see https://msdn.microsoft.com/en-us/library/windows/apps/ff941100(v=vs.105).aspx
             $response->setResponse($clientResponse->getBody()->getContents());
         } catch (RequestException $e) {
-            $response->setErrorResponse($e->getMessage());
+            $response->setErrorResponse($e);
         }
 
         return $response;
