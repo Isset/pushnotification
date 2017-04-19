@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace IssetBV\PushNotification\Type\Windows\Message;
 
 use IssetBV\PushNotification\Core\Message\Message;
-use IssetBV\PushNotification\src\PushNotification\Type\Windows\Message\WindowsMessageElement;
 use SimpleXMLElement;
 
 /**

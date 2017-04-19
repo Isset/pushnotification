@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace IssetBV\PushNotification\src\PushNotification\Type\Windows\Message;
+namespace IssetBV\PushNotification\Type\Windows\Message;
 
 use SimpleXMLElement;
 
