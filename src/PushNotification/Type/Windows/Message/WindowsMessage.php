@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace IssetBV\PushNotification\Type\Windows\Message;
 
 use IssetBV\PushNotification\Core\Message\Message;
+use IssetBV\PushNotification\src\PushNotification\Type\Windows\Message\WindowsMessageElement;
+use SimpleXMLElement;
 
 /**
- * @see https://msdn.microsoft.com/en-us/library/windows/apps/hh202967(v=vs.105).aspx
+ * Class WindowsMessage.
  */
 class WindowsMessage implements Message
 {
@@ -17,9 +19,9 @@ class WindowsMessage implements Message
     private $identifier;
 
     /**
-     * @var array
+     * @var WindowsMessageElement
      */
-    private $payload = [];
+    private $base;
 
     /**
      * WindowsMessage constructor.
@@ -29,6 +31,7 @@ class WindowsMessage implements Message
     public function __construct(string $identifier)
     {
         $this->identifier = $identifier;
+        $this->base = new WindowsMessageElement(new SimpleXMLElement('<?xml version="1.0" encoding="utf-8"?><toast/>'));
     }
 
     /**
@@ -42,27 +45,18 @@ class WindowsMessage implements Message
     /**
      * @param string $key
      *
-     * @return bool
+     * @return WindowsMessageElement
      */
-    public function payloadContainsKey(string $key): bool
+    public function addElement(string $key): WindowsMessageElement
     {
-        return array_key_exists($key, $this->payload);
+        return $this->base->addElement($key);
     }
 
     /**
-     * @param string $key
-     * @param $value
-     */
-    public function addToPayload(string $key, $value)
-    {
-        $this->payload[$key] = $value;
-    }
-
-    /**
-     * @return array
+     * @return string
      */
     public function getMessage()
     {
-        return $this->payload;
+        return $this->base->toString();
     }
 }

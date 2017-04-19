@@ -35,21 +35,34 @@ class WindowsConnection implements Connection
      * @var Client
      */
     private $client;
+    /**
+     * @var string
+     */
+    private $clientId;
+    /**
+     * @var string
+     */
+    private $clientSecret;
+    /**
+     * @var string
+     */
+    private $accessToken = null;
 
     /**
      * WindowsConnection constructor.
      *
      * @param string $type
+     * @param string $clientId
+     * @param string $clientSecret
      * @param bool $default
      * @param null|HandlerStack $handler
      */
-    public function __construct(string $type, bool $default = false, HandlerStack $handler = null)
+    public function __construct(string $type, string $clientId, string $clientSecret, bool $default = false, HandlerStack $handler = null)
     {
         $clientConfig = [
             'headers' => [
                 'Content-Type' => 'text/xml',
-                'X-WindowsPhone-Target' => 'toast',
-                'X-NotificationClass' => '2',
+                'X-WNS-TYPE' => 'wns/toast',
             ],
             'connect_timeout' => 3,
             'timeout' => 5,
@@ -62,6 +75,8 @@ class WindowsConnection implements Connection
         $this->client = new Client($clientConfig);
         $this->type = $type;
         $this->default = $default;
+        $this->clientId = $clientId;
+        $this->clientSecret = $clientSecret;
     }
 
     /**
@@ -69,23 +84,21 @@ class WindowsConnection implements Connection
      *
      * @throws ConnectionException
      * @throws ConnectionHandlerException
+     * @throws \RuntimeException
      *
      * @return Response
      */
     public function sendAndReceive(Message $message): Response
     {
-        $xml = new \SimpleXMLElement('<?xml version="1.0" encoding="utf-8"?><wp:Notification xmlns:wp="WPNotification" />');
-        $toast = $xml->addChild('wp:Toast');
-        foreach ($message->getMessage() as $element => $value) {
-            $toast->addChild($element, htmlspecialchars($value, ENT_XML1 | ENT_QUOTES));
-        }
         $response = new ConnectionResponseImpl();
 
-        $request = new Request('POST', $message->getIdentifier(), [], $xml->asXML());
         try {
+            $request = new Request('POST',
+                $message->getIdentifier(),
+                ['Authorization' => 'Bearer ' . $this->getAccessToken()],
+                $message->getMessage()
+            );
             $clientResponse = $this->client->send($request);
-            // check against headers? X-NotificationStatus / X-SubscriptionStatus / X-DeviceConnectionStatus
-            // @see https://msdn.microsoft.com/en-us/library/windows/apps/ff941100(v=vs.105).aspx
             $response->setResponse($clientResponse->getBody()->getContents());
         } catch (RequestException $e) {
             $response->setErrorResponse($e);
@@ -121,5 +134,32 @@ class WindowsConnection implements Connection
     public function isDefault(): bool
     {
         return $this->default;
+    }
+
+    /**
+     * @return string
+     */
+    private function getAccessToken(): string
+    {
+        if ($this->accessToken === null) {
+            $client = new Client([
+                'headers' => [
+                    'Content-Type' => 'application/x-www-form-urlencoded',
+                ],
+                'connect_timeout' => 3,
+                'timeout' => 5,
+            ]);
+
+            $this->accessToken = json_decode($client->request('POST', 'https://login.live.com/accesstoken.srf', [
+                'form_params' => [
+                    'grant_type' => 'client_credentials',
+                    'client_id' => $this->clientId,
+                    'client_secret' => $this->clientSecret,
+                    'scope' => 'notify.windows.com',
+                ],
+            ])->getBody()->getContents())->access_token;
+        }
+
+        return $this->accessToken;
     }
 }
